@@ -2,6 +2,8 @@
 //set the game to the starting point
 
 //selecting elements
+const player0El = document.querySelector('.player--0');
+const player1El = document.querySelector('.player--1');
 const score0El = document.querySelector('#score--0'); //or other way for id-s
 const score1El = document.getElementById('score--1');
 const current0El = document.getElementById('current--0');
@@ -15,6 +17,7 @@ score0El.textContent = 0;
 score1El.textContent = 0;
 diceEl.classList.add('hidden');
 let currentScore = 0;
+let activePlayer = 0;
 //rolling the dice
 btnRoll.addEventListener('click', function () {
   //1.Generating a random dice roll
@@ -27,8 +30,14 @@ btnRoll.addEventListener('click', function () {
   if (dice !== 1) {
     //add the dice to the current score
     currentScore += dice;
-    current0El.textContent = currentScore; //change later
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
     //switch to the next player
+    document.getElementById(`current--${activePlayer}`).textContent = 0; //who was active resetting the current 0
+    currentScore = 0;
+    activePlayer = activePlayer === 0 ? 1 : 0; //plyaer1 = 0 player2 = 1
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
   }
 });
